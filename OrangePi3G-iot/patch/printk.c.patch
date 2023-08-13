@@ -1,0 +1,31 @@
+--- a/kernel/kernel/printk.c	2023-08-13 12:40:02.418795454 +0300
++++ b/kernel/kernel/printk.c	2023-08-13 12:40:55.867298605 +0300
+@@ -77,7 +77,7 @@
+ static bool log_in_resume = 0;
+ #ifdef CONFIG_MT_PRINTK_UART_CONSOLE                                                    
+ extern int mt_need_uart_console;
+-inline void mt_disable_uart(void) 
++void mt_disable_uart(void) 
+ {   
+     if(mt_need_uart_console == 0){                                                      
+         printk("<< printk console disable >>\n");                                       
+@@ -86,7 +86,8 @@
+         printk("<< printk console can't be disabled >>\n");                             
+     }   
+ }           
+-inline void mt_enable_uart(void)                                                            
++EXPORT_SYMBOL(mt_disable_uart);
++void mt_enable_uart(void)                                                            
+ {   
+     if(mt_need_uart_console == 1){
+         if(printk_disable_uart == 0)
+@@ -96,7 +97,8 @@
+     }else{
+         printk("<< printk console can't be enabled >>\n");
+     }
+-}                                                                                       
++}                               
++EXPORT_SYMBOL(mt_enable_uart);                                                        
+ #endif 
+ /* printk's without a loglevel use this.. */
+ #define DEFAULT_MESSAGE_LOGLEVEL CONFIG_DEFAULT_MESSAGE_LOGLEVEL
