@@ -12,5 +12,6 @@ export TARGET_PRODUCT=$MTK_PROJECT
 #export PATH=../external/make:$PATH
 
 pushd kernel
+make O=$build_dir  ARCH=arm CROSS_COMPILE=$CROSS silentoldconfig
 make O=$build_dir ARCH=arm CROSS_COMPILE=$CROSS -j10
 popd
